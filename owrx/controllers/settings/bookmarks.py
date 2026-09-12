@@ -23,6 +23,8 @@ class BookmarksController(AuthorizationMixin, BreadcrumbMixin, WebpageController
 
     def render_table(self):
         bookmarks = Bookmarks.getSharedInstance().getEditableBookmarks()
+        # Sorting bookmarks by frequency (ascending) to improve user experience
+        bookmarks = sorted(bookmarks, key=lambda b: b.getFrequency())
         emptyText = """
             <tr class="emptytext"><td colspan="7">
                 No bookmarks in storage. You can add new bookmarks using the buttons below. 
