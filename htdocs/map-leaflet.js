@@ -253,12 +253,12 @@ MapManager.prototype.initializeMap = async function(receiver_gps, api_key, weath
         var self = this;
 
         // load Leaflet CSS first
-        await fetchStyleSheet('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css');
+        await fetchStyleSheet('static/leaflet.css');
         // now load Leaflet JS
-        await $.getScript('https://unpkg.com/leaflet@1.9.4/dist/leaflet.js');
+        await $.getScript('static/leaflet.js');
         // load geodesic and textpath plugins
-        await $.getScript('https://cdn.jsdelivr.net/npm/leaflet.geodesic');
-        await $.getScript('https://cdn.jsdelivr.net/npm/leaflet-textpath@1.2.3/leaflet.textpath.min.js');
+        await $.getScript('static/leaflet.geodesic');
+        await $.getScript('static/leaflet.textpath');
 
         // create map
         map = L.map('openwebrx-map', { zoomControl: false, worldCopyJump: true }).setView([receiver_gps.lat, receiver_gps.lon], 5);
@@ -267,7 +267,7 @@ MapManager.prototype.initializeMap = async function(receiver_gps, api_key, weath
         new L.Control.Zoom({ position: 'bottomright' }).addTo(map);
 
         // add night overlay
-        $.getScript('https://unpkg.com/@joergdietrich/leaflet.terminator@1.1.0/L.Terminator.js').done(function () {
+        $.getScript('static/leaflet.terminator').done(function () {
             var pane = map.createPane('nite');
             pane.style.zIndex = 201;
             pane.style.pointerEvents = 'none !important';
