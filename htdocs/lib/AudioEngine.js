@@ -334,12 +334,14 @@ AudioEngine.prototype.getBuffersize = function() {
     return this.audioBuffers.map(function(b){ return b.length; }).reduce(function(a, b){ return a + b; }, 0);
 };
 
-AudioEngine.prototype.startRecording = function() {
+AudioEngine.prototype.startRecording = function () {
     if (!this.recording) {
-        var date = new Date(Date.now()).toISOString().slice(2,19)
-            .replaceAll('-','').replaceAll(':','').replaceAll('T','-');
+        var d = new Date();
+        var localISO = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString();
+        var date = localISO.slice(2,19).replaceAll('-', '').replaceAll(':', '').replaceAll('T', '-');
         var freq = Math.round(UI.getFrequency() / 1000);
-        this.mp3fileName = "REC-" + date + '-' + freq + ".mp3";
+        freq = String(freq).padStart(6, '0');
+        this.mp3fileName = "REC-" + freq + "-" + date + ".mp3";
         this.recording = true;
     }
 };
