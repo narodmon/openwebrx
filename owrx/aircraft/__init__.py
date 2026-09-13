@@ -228,7 +228,7 @@ class AircraftParser(TextParser):
 
     # Common function to parse ACARS subframes in ACARS/HFDL/VDL2/etc
     def parseAcars(self, data, out):
-        #logger.debug(f"ACARS: {data}")
+        # logger.debug(f"ACARS: {data}")
         # Look up human-readable frame type
         label = data["label"]
         if label not in ACARS_LABELS:
@@ -383,10 +383,7 @@ class AircraftParser(TextParser):
     # Parse single LatLon value
     def parseLatLon(self, text, out):
         m = re.match(r"^([NS])(\d+)([WE])(\d+),(.*)$", text)
-        if not m:
-            return None
-        else:
-            # Degrees and minutes to fractional degrees
+        if m:
             lat = int(m.group(2))
             lon = int(m.group(4))
             lat = (lat // 1000) + (lat % 1000) / 10 / 60
@@ -394,6 +391,21 @@ class AircraftParser(TextParser):
             out["lat"] = lat * (1 if m.group(1) == "N" else -1)
             out["lon"] = lon * (1 if m.group(3) == "E" else -1)
             return m.group(5)
+
+        m = re.search(r"([NS])\s*(\d+\.\d+)\s+([EW])\s*(\d+\.\d+)", text)
+        if m:
+            out["lat"] = float(m.group(2)) * (1 if m.group(1) == "N" else -1)
+            out["lon"] = float(m.group(4)) * (1 if m.group(3) == "E" else -1)
+            return text[m.end():]
+
+        mLat = re.search(r"LAT([NS])\s*(\d+\.\d+)", text)
+        mLon = re.search(r"LON([EW])\s*(\d+\.\d+)", text)
+        if mLat and mLon:
+            out["lat"] = float(mLat.group(2)) * (1 if mLat.group(1) == "N" else -1)
+            out["lon"] = float(mLon.group(2)) * (1 if mLon.group(1) == "E" else -1)
+            return ""
+
+        return None
 
     # Parse single waypoint + time + flight level
     def parseWaypoint(self, text, out):
