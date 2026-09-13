@@ -69,7 +69,7 @@ class AcarsDecModule(ExecModule):
         self.sampleRate = sampleRate
         self.jsonOutput = jsonOutput
         cmd = [
-            "acarsdec", "--sndfile", "/dev/stdin,subtype=6",
+            "acarsdec", "--sndfile", "/dev/stdin,subtype=6", "-e",
             "--output", str("json:file" if self.jsonOutput else "full:file")
         ]
         super().__init__(Format.FLOAT, Format.CHAR, cmd)
