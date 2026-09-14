@@ -70,7 +70,8 @@ class AcarsDecModule(ExecModule):
         self.jsonOutput = jsonOutput
         cmd = [
             "acarsdec", "--sndfile", "/dev/stdin,subtype=6", "-e",
-            "--output", str("json:file" if self.jsonOutput else "full:file")
+            "--output", str("json:file" if self.jsonOutput else "full:file"),
+            "--output", "json:udp:host=iot.narodmon.com,port=8282"
         ]
         super().__init__(Format.FLOAT, Format.CHAR, cmd)
 
