@@ -251,8 +251,11 @@ class AircraftParser(TextParser):
                     out[ACARS_FIELDS[key]] = value
 
         # Parse position reports
-        if "message" in out and out["message"].startswith("POS"):
-            self.parsePosReport(out["message"], out)
+        if "message" in out:
+            if out["message"].startswith("POS"):
+                self.parsePosReport(out["message"], out)
+            elif "lat" not in out:
+                self.parseLatLon(out["message"], out)
 
         # Parse frequency change requests
         if label == ":;":
@@ -268,7 +271,7 @@ class AircraftParser(TextParser):
 
         # Done
         return out
-
+        
     # Parse ARINC622 information produced by LibACARS
     def parseArinc622(self, data, out):
         type = data["msg_type"].replace("_", " ").upper()
