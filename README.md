@@ -55,22 +55,11 @@ It has the following features:
 
 The following methods of setting up a receiver are currently available:
 
-- Raspberry Pi SD card images
 - Debian repository
-- Docker images
 - Manual installation
 
 Please checkout the [setup guide on the wiki](https://github.com/jketterl/openwebrx/wiki/Setup-Guide) for more details
 on the respective methods.
-
-## Community
-
-If you have trouble setting up or configuring your receiver, you have some great idea you want to see implemented, or
-you just generally want to have some OpenWebRX-related chat, come visit us over on
-[our groups.io group](https://groups.io/g/openwebrx).
-
-If you want to hang out, chat, or get in touch directly with the developers, receiver operators or users, feel free to
-drop by in [our Discord server](https://discord.gg/gnE9hPz).
 
 ## Usage tips
 
@@ -83,7 +72,6 @@ However, if you hold down the shift key, you can drag the center line (BFO) or t
 ## Licensing
 
 OpenWebRX is available under Affero GPL v3 license
-([summary](https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0))).
 
 OpenWebRX is also available under a commercial license on request. Please contact me at the address
 *&lt;randras@sdr.hu&gt;* for licensing options. 
