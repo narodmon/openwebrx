@@ -27,15 +27,45 @@ class Mp3Recorder(ThreadModule, DataRecorder):
     def getOutputFormat(self) -> Format:
         return Format.CHAR
 
+    def _start_file(self):
+        import os, time
+        from datetime import datetime
+        now = datetime.now()
+        freq = f"{self.frequency // 1000}" if getattr(self, 'frequency', 0) > 0 else "000000"
+        freq_dir = os.path.join(self.base_dir, freq)
+        os.makedirs(freq_dir, exist_ok=True)
+        filepath = os.path.join(freq_dir, f"REC-{freq}-{now.strftime('%y%m%d-%H%M%S')}.mp3")
+        self.file = open(filepath, "wb")
+        self.cntBytes, self.is_recording, self.last_w = 0, True, time.time()
+        logger.info(f"[Mp3Recorder] Open: {filepath}")
+
     def run(self):
+        import time
+        from owrx.config import Config
+        self.ht = 60 # max silence within 1 file in sec
         while self.doRun:
             data = self.reader.read()
-            if data is None:
-                self.doRun = False
-            else:
-                self.writeFile(data)
-        self.closeFile()
+            if data is None: self.doRun = False; break
+            if len(data) == 0: continue
+            cur = time.time()
+            if self.is_recording and (self.last_w > 0) and (cur - self.last_w > self.ht):
+                self.closeFile(); self.is_recording = False; self.last_w = cur; continue
+            if not self.is_recording:
+                try: self._start_file()
+                except Exception as e: logger.error(f"Err init: {e}")
+            if self.is_recording and self.file:
+                try:
+                    self.file.write(data); self.last_w = cur; self.cntBytes += len(data)
+                    self.file.flush()
+                    if self.cntBytes >= self.maxBytes: self.closeFile(); self.is_recording = False
+                except Exception as e: logger.error(f"Err write: {e}")
+        if self.is_recording: self.closeFile()
 
+    def closeFile(self):
+        if self.file is not None:
+            try: logger.info(f"[Mp3Recorder] Close: {self.file.name}"); self.file.close()
+            except Exception as e: logger.error(f"Err close: {e}")
+            self.file = None
 
 class TextParser(LineBasedModule, DataRecorder):
     def __init__(self, filePrefix: str = None, service: bool = False):
