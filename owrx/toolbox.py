@@ -37,9 +37,7 @@ class Mp3Recorder(ThreadModule, DataRecorder):
         from datetime import datetime
         now = datetime.now()
         freq = f"{self.frequency // 1000}" if getattr(self, 'frequency', 0) > 0 else "000000"
-        freq_dir = os.path.join(self.base_dir, freq)
-        os.makedirs(freq_dir, exist_ok=True)
-        filepath = os.path.join(freq_dir, f"REC-{freq}-{now.strftime('%y%m%d-%H%M%S')}.mp3")
+        filepath = os.path.join(self.base_dir, f"REC-{freq}-{now.strftime('%y%m%d-%H%M%S')}.mp3")
         self.file = open(filepath, "wb")
         self.cntBytes, self.is_recording, self.last_w = 0, True, time.time()
         logger.info(f"[Mp3Recorder] Open: {filepath}")
