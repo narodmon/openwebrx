@@ -72,6 +72,3 @@ However, if you hold down the shift key, you can drag the center line (BFO) or t
 ## Licensing
 
 OpenWebRX is available under Affero GPL v3 license
-
-OpenWebRX is also available under a commercial license on request. Please contact me at the address
-*&lt;randras@sdr.hu&gt;* for licensing options. 
