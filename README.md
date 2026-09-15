@@ -5,7 +5,7 @@ Key differences between this fork and the base version:
 * Reduction in the number of decoder-related freezes during restarts.
 * Localizing OSM Map Assets for Traffic Independence and Supply Chain Security.
 * Efficient Storage & Intelligent Squelch-Based Audio Splitting.
-* ACARS Telemetry Parsing Fix.
+* ACARS Telemetry Parsing Fix and external UDP logging.
 * Numerous minor fixes.
 
 OpenWebRX+
