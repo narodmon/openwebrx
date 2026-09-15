@@ -1,4 +1,4 @@
-Key differences between this fork and the OpenWebRX+ base version:
+Key differences between this fork and the base version:
 =========
 
 * Sort Bookmarks by Frequency in Admin's UI.
@@ -6,6 +6,7 @@ Key differences between this fork and the OpenWebRX+ base version:
 * Localizing OSM Map Assets for Traffic Independence and Supply Chain Security.
 * Efficient Storage & Intelligent Squelch-Based Audio Splitting.
 * ACARS Telemetry Parsing Fix.
+* Numerous minor fixes.
 
 OpenWebRX+
 =========
