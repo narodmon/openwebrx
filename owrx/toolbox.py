@@ -20,7 +20,11 @@ class Mp3Recorder(ThreadModule, DataRecorder):
         self.service = service
         DataRecorder.__init__(self, "REC", ".mp3", maxBytes)
         ThreadModule.__init__(self)
-        self.is_recording, self.last_w, self.ht, False, 0, 1.0
+
+        self.base_dir = "/tmp"
+        self.is_recording = False
+        self.last_w = 0
+        self.ht = 60
 
     def getInputFormat(self) -> Format:
         return Format.CHAR
