@@ -181,7 +181,10 @@ class DataRecorder(object):
     def writeFile(self, data):
         # If no file open, create and open a new file
         if self.file is None and self.filePfx is not None:
-            self.newFile(Storage.makeFileName(self.filePfx+"-{0}", self.frequency) + self.fileExt)
+            import time
+            freq = f"{self.frequency // 1000}" if self.frequency > 0 else "000000"
+            fileName = f"{self.filePfx}-{freq}-{time.strftime('%y%m%d-%H%M%S')}{self.fileExt}"
+            self.newFile(fileName)
         # If file open now...
         if self.file is not None:
             # Write new line into the file
