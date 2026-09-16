@@ -128,7 +128,7 @@ class AircraftManager(object):
     def __init__(self):
         self.lock = threading.Lock()
         self.cleanupPeriod = 60
-        self.maxMsgLog = 20
+        self.maxMsgLog = 3
         self.colors = ColorCache()
         self.aircraft = {}
         # Start periodic cleanup task
