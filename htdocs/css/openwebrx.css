@@ -747,7 +747,8 @@ img.openwebrx-mirror-img
 
 .openwebrx-plugin-stack {
     position: absolute;
-    left: -50px;
+    margin-right: 5px;
+    right: 100%;
     bottom: 10px;
     display: flex;
     flex-direction: column;
