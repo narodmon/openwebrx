@@ -11,7 +11,7 @@ Environment="HOME=/tmp"
 
 # Prevent USB lock by killing hung demodulators on restart
 KillMode=mixed
-TimeoutStopSec=5s
+TimeoutStopSec=3s
 SendSIGKILL=yes
 
 [Install]
