@@ -517,7 +517,7 @@ AdsbMessagePanel.prototype.pushMessage = function(msg) {
     var odd = false;
     msg.aircraft.forEach(entry => {
         // Signal strength
-        var rssi = entry.rssi? entry.rssi + '&nbsp;dB' : '';
+        var rssi = entry.rssi? Math.round(entry.rssi) + '&nbsp;dB' : '';
 
         // Flight identificators
         var flight =
@@ -533,18 +533,18 @@ AdsbMessagePanel.prototype.pushMessage = function(msg) {
         if (flag) aircraft = flag + '&nbsp;' + aircraft;
 
         // Altitude and climb / descent
-        var alt  = entry.altitude? '' + entry.altitude : '';
+        var alt = entry.altitude ? Math.round(entry.altitude * 0.003048)/10 + 'km' : '';
         if (entry.vspeed) {
-            var vspeed = entry.vspeed;
-            vspeed = vspeed>0? vspeed + '&uarr;' : (-vspeed) + '&darr;';
-            alt    = vspeed + '&nbsp'.repeat(6 - alt.length) + alt;
+            var vspeed_ms = (entry.vspeed / 196.85).toFixed(1);
+            var vspeed_str = entry.vspeed > 0 ? vspeed_ms + '↑' : Math.abs(vspeed_ms) + '↓';
+            alt = vspeed_str + '&nbsp;'.repeat(Math.max(1, 7 - alt.length)) + alt;
         }
 
         // Speed and direction
-        var speed = entry.speed? '' + entry.speed : '';
+        var speed = entry.speed ? Math.round(entry.speed * 1.852) + 'km/h' : '';
         if (entry.course) {
             var dir = Utils.degToCompass(entry.course);
-            speed = dir + '&nbsp'.repeat(5 - speed.length) + speed;
+            speed = dir + '&nbsp;'.repeat(Math.max(1, 8 - speed.length)) + speed;
         }
 
         // Replace squawk with emergency status, if present
