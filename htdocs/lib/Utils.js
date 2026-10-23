@@ -253,8 +253,9 @@ Utils.truncate = function(str, count) {
 
 // Convert degrees to compass direction.
 Utils.degToCompass = function(deg) {
-    dir = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
-    return dir[Math.floor((deg/22.5) + 0.5) % 16];
+    const dir = ['&uarr;N', '&nearr;NNE', '&nearr;NE', '&nearr;ENE', '&rarr;E', '&searr;ESE', '&searr;SE', '&searr;SSE', '&darr;S', '&swarr;SSW', '&swarr;SW', '&swarr;WSW', '&larr;W', '&nwarr;WNW', '&nwarr;NW', '&nwarr;NNW'];
+    const idx = Math.floor((deg / 22.5) + 0.5) % 16;
+    return dir[idx < 0 ? idx + 16 : idx];
 };
 
 // Convert Maidenhead locator ID to lat/lon pair.
